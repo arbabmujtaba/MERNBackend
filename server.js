@@ -1,9 +1,5 @@
-const express = require(`express`)
-const app = express();
-app.listen(4000)
-app.get("/",(req,res)=>{
-    res.send("Wassup Bitch")
-})
-app.get("/Mypage",(req,res)=>{
-    res.send("This is The about page Nigga")
-})
+const app = require('./src/app');
+
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
