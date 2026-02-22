@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "checkJs": false
+  },
+  "include": [
+    "server.js",
+    "src/**/*.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

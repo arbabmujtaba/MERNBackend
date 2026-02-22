@@ -1,0 +1,173 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f3f8f1;
+  --surface: #ffffff;
+  --surface-soft: #eef4eb;
+  --text: #15201a;
+  --text-soft: #4b5f53;
+  --primary: #2f7d32;
+  --primary-hover: #246428;
+  --ring: #7fbf83;
+  --border: #c8d9c7;
+  --shadow: 0 10px 30px rgba(18, 38, 22, 0.1);
+  --radius: 14px;
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.25rem;
+  --space-5: 1.5rem;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 20%, #d8ead3 0%, transparent 45%),
+    radial-gradient(circle at 80% 10%, #e4efe0 0%, transparent 40%),
+    var(--bg);
+  line-height: 1.4;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.create-post-section,
+.feed-section,
+.image-section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+}
+
+.create-post-section h1,
+.feed-section h1 {
+  margin-bottom: var(--space-4);
+  letter-spacing: 0.2px;
+}
+
+.create-post-section form {
+  width: min(92vw, 420px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  box-shadow: var(--shadow);
+}
+
+.create-post-section form input,
+.create-post-section button {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.create-post-section form input {
+  padding: 0.72rem 0.85rem;
+  background-color: var(--surface-soft);
+  color: var(--text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.create-post-section form input::placeholder {
+  color: var(--text-soft);
+}
+
+.create-post-section form input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(127, 191, 131, 0.25);
+  background-color: #fff;
+}
+
+.create-post-section button {
+  border: none;
+  padding: 0.78rem 1rem;
+  background: linear-gradient(135deg, var(--primary), #3a9640);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.create-post-section button:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 8px 20px rgba(36, 100, 40, 0.28);
+}
+
+.create-post-section button:active {
+  transform: translateY(1px);
+}
+
+.create-post-section button:focus-visible {
+  outline: 3px solid rgba(127, 191, 131, 0.45);
+  outline-offset: 2px;
+}
+
+.feed-section {
+  justify-content: flex-start;
+  gap: var(--space-4);
+  padding-top: clamp(2rem, 6vh, 3.5rem);
+}
+
+.post-card {
+  width: min(92vw, 560px);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.post-card h1 {
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  margin: 0;
+}
+
+.post-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid #d6e4d6;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .create-post-section,
+  .feed-section,
+  .image-section {
+    padding: var(--space-4);
+  }
+
+  .create-post-section form,
+  .post-card {
+    width: 100%;
+    padding: var(--space-4);
+  }
+}
