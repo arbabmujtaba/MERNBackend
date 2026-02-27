@@ -4,7 +4,7 @@ const usermodel = require("../models/user.model");
 const router = express.Router();
 
 router.post("/create",async (req,res)=>{
-    const tokken = req.cookies.token
+    const tokken =req.cookies.token
     if(!tokken){
         return res.status(401).json({
             message:"Unauthorized"
