@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const bcrypt = require("bcryptjs")
 async function registerUser(req,res){
-    const{username,email,password,role="user"}=req.body
+    const{username,email,password,Role="user"}=req.body
     const existingUser = await usermodel.findOne({
         $or:[
             {username},
@@ -15,12 +15,12 @@ async function registerUser(req,res){
         message:"User Is already present"
        })
     }
-    const hash = await jbcrypt.hash(password,10)
+    const hash = await bcrypt.hash(password,10)
     const user = await usermodel.create({
-        username:hash,
-        password,
+        username,
+        password:hash,
         email,
-        role
+        Role
     })
     
     const token = jwt.sign({id:user._id,role:user.role},process.env.JWT_SECRET)
@@ -35,8 +35,42 @@ async function registerUser(req,res){
             id: user._id,
             username:user.username,
             email:user.email,
-            role:user.role
+            Role:user.Role
         }
     })
 }
-module.exports = {registerUser}
+async function Login(req,res){
+    const {username,email,password} = req.body
+    const user = await usermodel.findOne({
+        $or:[
+            {username},
+            {email}
+        ]
+    })
+    if(!user){
+        return res.status(401).json({
+            message:"User Not Found"
+        })
+    }
+    const isPasswordValid = await  bcrypt.compare(password,user.password)
+    if(!isPasswordValid){
+        return res.status(401).json({
+            message:"pasword is not valid"
+        })
+    }
+    const token = jwt.sign({
+        id:user._id,
+        role:user.role
+    },process.env.JWT_SECRET)
+    res.cookie("token",token)
+    res.status(200).json({
+        message:"Login Successfull",
+        user:{
+            id:user._id,
+            username:user.username,
+            email:user.email,
+            Role:user.Role
+        }
+    })
+}
+module.exports = {registerUser,Login}
