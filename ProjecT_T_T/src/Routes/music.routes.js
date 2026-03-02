@@ -6,7 +6,8 @@ const multer = require("multer")
 const storage = multer.memoryStorage()
 const upload = multer({storage})
 router.post("/upload",Middleware.AuthArtist,upload.single("music"),musicController.createMusic)
-router.post("/album",musicController.CreateAlbum)
+router.post("/album",Middleware.AuthArtist,musicController.CreateAlbum)
+router.get("/",Middleware.Authuser,musicController.Getallmusic)
 
 
 

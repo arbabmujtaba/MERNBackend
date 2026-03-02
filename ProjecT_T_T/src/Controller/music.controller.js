@@ -5,19 +5,7 @@ const jwt = require("jsonwebtoken")
 async function createMusic(req,res){
     try{
         const { title } = req.body
-        const token = req.cookies.token
         const file = req.file
-        if(!token){
-            return res.status(401).json({
-                message:"Unauthorised Access"
-            })
-        }
-        const decoded = jwt.verify(token,process.env.JWT_SECRET)
-        if(decoded.role !== "Artist"){
-            return res.status(403).json({
-                message:"Sorry You cannot create The music"
-            })
-        }
         if(!title || !file){
             return res.status(400).json({
                 message:"Title and music file are required"
@@ -27,7 +15,7 @@ async function createMusic(req,res){
         const music = await MusicModel.create({
             uri: result.url,
             Title: title,
-            Role: decoded.id
+            Role: req.user.id
         })
         return res.status(201).json({
             message:"Music Created Successfully",
@@ -44,23 +32,10 @@ async function createMusic(req,res){
     }
 }
 async function CreateAlbum(req,res){
-    const token = req.cookies.token
-    const {title,music} = req.body
-    if(!token){
-        return res.status(401).json({
-            message:"Unauthorised Access"
-        })
-    }
-    const decoded = jwt.verify(token,process.env.JWT_SECRET)
-    if(decoded.role !== "Artist"){
-        return res.status(403).json({
-            message:"Sorry You cannot create The music"
-        })
-    }
     const album = await albumModel.create({
         title,
         music:music,
-        artist:decoded.id
+        artist:req.user.id
     })
     return res.status(201).json({
         message:"Album Created Successfully",
@@ -73,6 +48,13 @@ async function CreateAlbum(req,res){
         }
     })
 }
+async function Getallmusic(req,res){
+    const music = await MusicModel.find().populate("Role")
+    return res.status(200).json({
+        message:"Music Fetched Sucessfully",
+        music
+    })
+}
 
 
-module.exports = {createMusic, CreateAlbum}
+module.exports = {createMusic, CreateAlbum, Getallmusic}
