@@ -33,7 +33,7 @@ async function Authuser(req,res,next){
         const decoded = jwt.verify(token,process.env.JWT_SECRET)
         if(decoded.role !== "user"){
             return res.status(403).json({
-                message:"Sorry You cannot create The music"
+                message:"Sorry You cannot List The music"
             })
         }
         req.user = decoded;

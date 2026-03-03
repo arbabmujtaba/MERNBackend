@@ -8,6 +8,8 @@ const upload = multer({storage})
 router.post("/upload",Middleware.AuthArtist,upload.single("music"),musicController.createMusic)
 router.post("/album",Middleware.AuthArtist,musicController.CreateAlbum)
 router.get("/",Middleware.Authuser,musicController.Getallmusic)
+router.get("/albums",Middleware.Authuser,musicController.GetallAlbum)
+router.get("/albums/:id",Middleware.Authuser,musicController.Getalbumbyid)
 
 
 
